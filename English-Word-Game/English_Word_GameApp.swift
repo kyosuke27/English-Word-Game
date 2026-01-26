@@ -14,7 +14,6 @@ struct English_Word_GameApp: App {
     
     var body: some Scene {
         WindowGroup {
-//            ContentView(question: questions)
             HomeScreen()
         }
     }

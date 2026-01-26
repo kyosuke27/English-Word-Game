@@ -13,7 +13,7 @@ struct EnglishWord : Codable,Transferable,Identifiable{
     }
 }
 
-struct ContentView: View {
+struct GameScreen: View {
     let questions:[Question]
     @State var shuffedQuestion:[String]
     @State var nowQuestion:Question
@@ -39,15 +39,15 @@ struct ContentView: View {
     
     var body: some View {
         VStack{
-            if let clear = isClear{
+            if let clear =  isClear {
                 Text(clear ? "正解":"不正解")
             }
             HStack {
                 ForEach(words){ word in
-                    ActiveWord(word: word)
+                    ActiveWord(word: word,height: 50,width: 90)
                         .draggable(word){
                             // 移動中のデータ
-                            ActiveWord(word:word)
+                            ActiveWord(word:word,height: 50,width: 90)
                         }
                         .dropDestination(for: EnglishWord.self){ items, _ in
                             // items -> 移動中のアイテム
@@ -60,68 +60,49 @@ struct ContentView: View {
             }
             .padding()
             HStack {
-                ForEach(draggedWords.indices,id: \.self){ i in
-                    if let word = draggedWords[i] {
-                        ActiveWord(word:word)
-                    }else{
-                        DiactiveWord(isBorlderColor: $disabledTables[i],englishWord: draggedWords[i])
-                            .dropDestination(for: EnglishWord.self){ items, _ in
-                                // items -> 移動中のアイテム
-                                guard let draggedItem = items.first else {return false}
-                                draggedWords[i] = draggedItem
-                                // wordsの要素を削除する
-                                // words:0,1,2
-                                // item:1,2,3
-                                deleteCharacter(word: words, target: draggedItem)
-                                return true
-                            }isTargeted: { boolValue in
-                                disabledTables[i] = boolValue
-                            }
-                        
-                    }
-                }
             }
+            .padding()
             .onAppear{
                 if disabledTables.count != words.count{
                     disabledTables = Array(repeating: false, count: words.count)
                 }
             }
             
-        }
-        HStack{
-            Button {
-                resetAll()
-            } label: {
-                Text("リセット")
-                    .padding()
-                    .background(Color.extendedColor.appPurple)
-                    .foregroundStyle(Color.white.opacity(0.8))
-                    .clipShape(
-                        RoundedRectangle(cornerRadius: 8)
-                    )
-                
+            HStack{
+                Button {
+                    resetAll()
+                } label: {
+                    Text("リセット")
+                        .padding()
+                        .background(Color.extendedComponentColor.blueColor)
+                        .foregroundStyle(Color.white.opacity(0.8))
+                        .clipShape(
+                            RoundedRectangle(cornerRadius: 8)
+                        )
+                    
+                }
+                Button {
+                    // 決定処理
+                    checkQuizAnswer(draggedWords: draggedWords)
+                } label: {
+                    Text("決定！")
+                        .padding()
+                        .background(Color.pink.opacity(0.5))
+                        .foregroundStyle(Color.white.opacity(0.8))
+                        .clipShape(
+                            RoundedRectangle(cornerRadius: 8)
+                        )
+                    
+                }
             }
-            Button {
-                // 決定処理
-                checkQuizAnswer(draggedWords: draggedWords)
+            
+            Button  {
+                nextQuestion(nextindex: self.questionCount+1)
             } label: {
-                Text("決定！")
-                    .padding()
-                    .background(Color.pink.opacity(0.5))
-                    .foregroundStyle(Color.white.opacity(0.8))
-                    .clipShape(
-                        RoundedRectangle(cornerRadius: 8)
-                    )
-                
+                Text("次の問題")
             }
+            
         }
-        
-        Button  {
-            nextQuestion(nextindex: self.questionCount+1)
-        } label: {
-            Text("次の問題")
-        }
-        
         
     }
     
@@ -160,13 +141,9 @@ struct ContentView: View {
     }
     
     private func nextQuestion(nextindex:Int){
-        print(nextindex)
-        print(self.questions.count)
-        print(self.questions.count<=nextindex)
         if(self.questions.count<=nextindex){
             return
         }
-        print("更新")
         self.questionCount = nextindex
         self.nowQuestion = questions[nextindex]
         self.shuffedQuestion = nowQuestion.text.shuffled().map{String($0)}
@@ -176,6 +153,7 @@ struct ContentView: View {
         self.words = shuffledWord
         self.draggedWords = Array(repeating: nil, count: shuffedQuestion.count)
         self.disabledTables = Array(repeating: false, count: shuffedQuestion.count)
+        self.isClear = nil
     }
     
     
@@ -201,5 +179,5 @@ struct ContentView: View {
 
 #Preview {
     let questions:[Question] = [Question(id: 1, text: "CAT", answer: "CAT")]
-    ContentView(question: questions)
+    GameScreen(question: questions)
 }
