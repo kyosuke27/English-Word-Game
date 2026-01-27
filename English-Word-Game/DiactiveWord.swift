@@ -16,7 +16,7 @@ struct DiactiveWord: View {
         ZStack{
             RoundedRectangle(cornerRadius: 20, style: .continuous)
                 .fill(
-                    Color.extendedComponentColor.diactiveWordBackgroundColor
+                    Color.extendsColors.componentColor.diactiveWordBackgroundColor
                 )
                 .frame(width: width, height: height)
             // 下側に濃い影（落ち影）

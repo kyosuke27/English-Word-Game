@@ -16,6 +16,11 @@ struct ComponentColor{
     let diactiveWordBackgroundColor:Color
 }
 
+struct ExtendsColor{
+    let componentColor:ComponentColor
+    let baseColor:BaseColor
+}
+
 
 extension Color{
     // インスタンスではなく、型メソッドとして定義する
@@ -26,18 +31,18 @@ extension Color{
               blue: b/255,
               opacity: a)
     }
-    static let extendedColor = BaseColor(
-        mainGreen: Color.rgb(r: 92, g: 175, b: 89),
-        appOrange : Color.rgb(r: 251, g: 243, b: 185),
-        appYello : Color.rgb(r: 183, g: 177, b: 242),
-        borderColor: Color.rgb(r: 213, g: 220, b: 222)
-    )
-    
-    static let extendedComponentColor = ComponentColor(
-        greenLightColor: Color.rgb(r: 103, g: 183, b: 99),
-        greenDarkColor: Color.rgb(r: 72, g: 150, b: 70),
-        blueColor: Color.rgb(r:81, g:135, b:227),
-        cardBackgroundColor: Color.rgb(r: 243, g: 243, b: 247),
-        diactiveWordBackgroundColor:Color.rgb(r: 238, g: 236, b: 248)
+    static let extendsColors:ExtendsColor = ExtendsColor(
+        componentColor:ComponentColor(
+            greenLightColor: Color.rgb(r: 103, g: 183, b: 99),
+            greenDarkColor: Color.rgb(r: 72, g: 150, b: 70),
+            blueColor: Color.rgb(r:81, g:135, b:227),
+            cardBackgroundColor: Color.rgb(r: 251, g: 248, b: 253),
+            diactiveWordBackgroundColor:Color.rgb(r: 238, g: 236, b: 248)
+        ), baseColor:BaseColor(
+            mainGreen: Color.rgb(r: 92, g: 175, b: 89),
+            appOrange : Color.rgb(r: 251, g: 243, b: 185),
+            appYello : Color.rgb(r: 183, g: 177, b: 242),
+            borderColor: Color.rgb(r: 213, g: 220, b: 222)
+        )
     )
 }

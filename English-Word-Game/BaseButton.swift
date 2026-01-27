@@ -15,7 +15,7 @@ struct BaseButton: View {
         }
         .background(
             LinearGradient(
-                colors: [Color.extendedComponentColor.greenLightColor, Color.extendedComponentColor.greenDarkColor],
+                colors: [Color.extendsColors.componentColor.greenLightColor, Color.extendsColors.componentColor.greenDarkColor],
                 startPoint: .top,
                 endPoint: .bottom
             )
@@ -23,7 +23,7 @@ struct BaseButton: View {
         .clipShape(RoundedRectangle(cornerRadius: cornerAmount, style: .continuous))
         .overlay(
             RoundedRectangle(cornerRadius: cornerAmount, style: .continuous)
-                .stroke(Color.extendedColor.borderColor, lineWidth: 1)
+                .stroke(Color.extendsColors.baseColor.borderColor, lineWidth: 1)
         )
         .opacity(animateOnce ? 0.6 : 1.0)
         .scaleEffect(animateOnce ? 0.98 : 1.0)

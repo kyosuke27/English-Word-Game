@@ -74,7 +74,7 @@ struct GameScreen: View {
                 } label: {
                     Text("リセット")
                         .padding()
-                        .background(Color.extendedComponentColor.blueColor)
+                        .background(Color.extendsColors.componentColor.blueColor)
                         .foregroundStyle(Color.white.opacity(0.8))
                         .clipShape(
                             RoundedRectangle(cornerRadius: 8)

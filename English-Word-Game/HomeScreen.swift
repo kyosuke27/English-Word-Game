@@ -57,7 +57,7 @@ struct HomeScreen: View {
                 Spacer()
             }
             .frame(maxWidth: .infinity,maxHeight: .infinity)
-            .background(Color.extendedColor.appOrange)
+            .background(Color.extendsColors.baseColor.appOrange)
             BaseButton(text:"すぐ開始")
         }
     }
